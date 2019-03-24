@@ -17,6 +17,7 @@ defmodule BotLookup do
     end
   end
 
+  def bot?(%Plug.Conn{} = conn), do: conn |> get_ua() |> bot?()
   def bot?(nil), do: true
   def bot?(user_agent) when byte_size(user_agent) == 0, do: true
   def bot?(user_agent), do: GenServer.call(:bot_lookup, {:bot?, user_agent})
@@ -48,5 +49,9 @@ defmodule BotLookup do
     |> Enum.map(fn entry ->
       entry |> Map.get("pattern") |> Regex.compile!("i")
     end)
+  end
+
+  defp get_ua(conn) do
+    Plug.Conn.get_req_header(conn, "user-agent") |> List.first()
   end
 end
