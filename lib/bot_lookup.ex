@@ -27,11 +27,7 @@ defmodule BotLookup do
   ## Server Callbacks
 
   def init(_) do
-    {:ok, %{}, {:continue, :load_data}}
-  end
-
-  def handle_continue(:load_data, _state) do
-    {:noreply, load_data()}
+    {:ok, load_data()}
   end
 
   def handle_call({:bot?, user_agent}, _from, state) do
