@@ -18,9 +18,9 @@ defmodule BotLookup do
   end
 
   def bot?(%Plug.Conn{} = conn), do: conn |> get_ua() |> bot?()
-  def bot?(nil), do: true
-  def bot?(user_agent) when byte_size(user_agent) == 0, do: true
-  def bot?(user_agent), do: GenServer.call(:bot_lookup, {:bot?, user_agent})
+  def bot?(nil), do: Application.get_env(:bot_lookup, :require_ua)
+  def bot?(ua) when byte_size(ua) == 0, do: Application.get_env(:bot_lookup, :require_ua)
+  def bot?(ua), do: GenServer.call(:bot_lookup, {:bot?, ua})
 
   def data_file(), do: Path.join(:code.priv_dir(:bot_lookup), "bots.json")
 

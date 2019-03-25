@@ -4,7 +4,7 @@ defmodule BotLookup.MixProject do
   def project do
     [
       app: :bot_lookup,
-      version: "0.1.1",
+      version: "0.1.2",
       build_path: "./_build",
       config_path: "./config/config.exs",
       deps_path: "./deps",
@@ -19,7 +19,8 @@ defmodule BotLookup.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {BotLookup.Application, []}
+      mod: {BotLookup.Application, []},
+      env: [require_ua: true]
     ]
   end
 
